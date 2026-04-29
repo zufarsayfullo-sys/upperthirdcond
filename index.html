@@ -77,12 +77,22 @@
   .fb-formula strong { color:var(--lilac); }
   .fb-formula code { background:rgba(124,107,205,0.15); border-radius:4px; padding:1px 6px; font-size:13px; color:var(--violet2); }
 
-  /* ── ERROR GRID ── */
-  .error-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:9px; max-width:560px; margin:0 auto 26px; }
-  .eg-item { background:rgba(255,255,255,0.03); border:1px solid rgba(124,107,205,0.13); border-radius:10px; padding:12px 14px; text-align:left; }
-  .eg-wrong { font-size:11px; color:var(--red); text-decoration:line-through; opacity:0.8; margin-bottom:3px; }
-  .eg-right { font-size:12px; color:var(--green); font-weight:600; margin-bottom:3px; }
-  .eg-label { font-size:10px; color:rgba(255,255,255,0.25); letter-spacing:1px; text-transform:uppercase; }
+  /* ── EXAMPLE BOX ── */
+  .example-box {
+    background:rgba(124,107,205,0.06); border:1px solid rgba(124,107,205,0.15);
+    border-radius:14px; padding:18px 22px; margin:0 auto 24px; max-width:560px; text-align:left;
+  }
+  .ex-title { font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--violet2); font-weight:700; margin-bottom:12px; }
+  .ex-situation { font-size:14px; color:rgba(238,234,248,0.5); font-style:italic; margin-bottom:10px; }
+  .ex-sentence {
+    font-family:'Playfair Display',serif; font-size:17px; line-height:1.7; color:var(--paper);
+  }
+  .ex-blank {
+    display:inline-block;
+    border-bottom:2px solid var(--violet2);
+    color:var(--lilac); font-style:italic; font-size:16px;
+    padding:0 4px; min-width:80px; text-align:center;
+  }
 
   .intro-stats { display:flex; justify-content:center; gap:40px; margin-bottom:32px; }
   .is-val { font-family:'Playfair Display',serif; font-size:28px; color:var(--violet2); }
@@ -120,49 +130,73 @@
   .prog-seg.active  { background:var(--violet); animation:segpulse 1s infinite; }
   @keyframes segpulse{0%,100%{opacity:1}50%{opacity:0.45}}
 
-  /* ── SITUATION BOX ── */
-  .q-num { font-size:11px; letter-spacing:3px; color:var(--violet2); text-transform:uppercase; margin-bottom:12px; }
+  /* ── QUESTION ── */
+  .q-num { font-size:11px; letter-spacing:3px; color:var(--violet2); text-transform:uppercase; margin-bottom:14px; }
+
+  /* ── SITUATION ── */
   .situation-box {
     background:rgba(124,107,205,0.07); border:1px solid rgba(124,107,205,0.18);
-    border-radius:12px; padding:14px 18px; margin-bottom:16px;
+    border-radius:12px; padding:14px 18px; margin-bottom:20px;
   }
   .sit-label { font-size:10px; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.3); margin-bottom:6px; }
   .sit-text { font-family:'Playfair Display',serif; font-size:17px; line-height:1.55; color:var(--paper); }
-  .q-prompt { font-size:14px; color:rgba(238,234,248,0.5); margin-bottom:22px; font-style:italic; }
 
-  /* ── OPTIONS ── */
-  .options { display:flex; flex-direction:column; gap:10px; margin-bottom:24px; }
-  .opt {
-    position:relative; cursor:pointer;
-    background:rgba(255,255,255,0.025); border:1.5px solid rgba(124,107,205,0.1);
-    border-radius:11px; padding:14px 18px 14px 50px;
-    font-size:14px; line-height:1.55; color:rgba(238,234,248,0.72);
-    transition:all 0.2s; user-select:none;
+  /* ── FILL-IN SENTENCE ── */
+  .fill-prompt {
+    font-size:11px; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.3);
+    margin-bottom:10px;
   }
-  .opt:hover:not(.disabled) {
-    background:rgba(124,107,205,0.1); border-color:rgba(124,107,205,0.38);
-    color:var(--paper); transform:translateX(3px);
+  .fill-sentence {
+    font-family:'Playfair Display',serif;
+    font-size:20px; line-height:2.1;
+    color:var(--paper); margin-bottom:22px;
+    display:flex; flex-wrap:wrap; align-items:center; gap:6px 4px;
   }
-  .opt-lbl {
-    position:absolute; left:15px; top:16px;
-    width:22px; height:22px; border-radius:50%;
-    border:1.5px solid rgba(255,255,255,0.15);
-    display:flex; align-items:center; justify-content:center;
-    font-size:10px; font-weight:700; color:rgba(255,255,255,0.3); transition:all 0.2s;
+  .fill-word { white-space:nowrap; }
+
+  /* The two answer inputs */
+  .blank-input {
+    display:inline-block;
+    background:rgba(124,107,205,0.08);
+    border:none; border-bottom:2px solid rgba(124,107,205,0.45);
+    color:var(--lilac);
+    font-family:'Playfair Display',serif; font-size:18px; font-style:italic;
+    padding:2px 8px; outline:none;
+    min-width:140px; max-width:260px; width:auto;
+    transition:border-color 0.2s, background 0.2s;
+    border-radius:4px 4px 0 0;
+    text-align:center;
+    vertical-align:middle;
   }
-  .opt:hover:not(.disabled) .opt-lbl { border-color:var(--violet2); color:var(--violet2); }
-  .opt.correct-ans { background:rgba(74,171,128,0.15); border-color:var(--green); color:var(--paper); animation:pop 0.35s ease; }
-  .opt.correct-ans .opt-lbl { background:var(--green); border-color:var(--green); color:#fff; }
-  .opt.wrong-ans { background:rgba(192,80,112,0.12); border-color:var(--red); color:rgba(238,234,248,0.45); }
-  .opt.wrong-ans .opt-lbl { background:var(--red); border-color:var(--red); color:#fff; }
-  .opt.disabled { cursor:default; pointer-events:none; }
-  @keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.015)}100%{transform:scale(1)}}
+  .blank-input:focus { border-bottom-color:var(--violet2); background:rgba(124,107,205,0.13); }
+  .blank-input:disabled { opacity:0.7; cursor:default; }
+  .blank-input.correct-inp { border-bottom-color:var(--green); background:rgba(74,171,128,0.1); color:#7fe8b8; }
+  .blank-input.wrong-inp   { border-bottom-color:var(--red);   background:rgba(192,80,112,0.1);  color:#e8879a; }
+
+  /* Hint below each input */
+  .blank-hint {
+    display:block; font-size:10px; letter-spacing:1px; text-transform:uppercase;
+    color:rgba(255,255,255,0.22); text-align:center; margin-top:2px;
+  }
+  .blank-wrap { display:inline-flex; flex-direction:column; align-items:center; vertical-align:middle; }
+
+  /* ── CHECK BUTTON ── */
+  .check-row { display:flex; align-items:center; gap:10px; margin-bottom:18px; flex-wrap:wrap; }
+  .btn-check {
+    background:linear-gradient(135deg,var(--violet),#4a3a9a);
+    color:var(--paper); border:none; border-radius:9px;
+    padding:11px 28px; font-family:'Inter',sans-serif; font-size:14px; font-weight:600;
+    cursor:pointer; transition:all 0.2s;
+  }
+  .btn-check:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(124,107,205,0.35); }
+  .btn-check:disabled { opacity:0.4; cursor:default; transform:none; box-shadow:none; }
 
   /* ── FEEDBACK ── */
   .feedback { border-radius:10px; padding:13px 16px; margin-bottom:20px; font-size:14px; line-height:1.65; display:none; animation:fadeup 0.3s ease; }
   .feedback.show { display:block; }
   .feedback.ok  { background:rgba(74,171,128,0.13); border-left:3px solid var(--green); }
   .feedback.bad { background:rgba(192,80,112,0.13); border-left:3px solid var(--red); }
+  .correct-answer-text { color:var(--lilac); font-style:italic; font-weight:600; }
   @keyframes fadeup{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
 
   /* ── BUTTONS ── */
@@ -198,11 +232,28 @@
   .to-sub { color:rgba(238,234,248,0.42); font-size:15px; margin-bottom:26px; }
 
   .hidden { display:none!important; }
+
+  /* Report area */
+  .report-card {
+    background:rgba(0,0,0,0.3); border:1px solid rgba(124,107,205,0.15);
+    border-radius:14px; padding:18px; margin:20px 0 0; text-align:left;
+  }
+  .report-hdr { font-size:11px; font-weight:700; letter-spacing:1.5px; color:var(--violet2); text-transform:uppercase; margin-bottom:10px; }
+  .report-ta {
+    width:100%; height:180px; background:rgba(0,0,0,0.4);
+    border:1px solid rgba(255,255,255,0.08); border-radius:8px;
+    padding:10px 12px; font-family:'Inter',monospace; font-size:11px;
+    line-height:1.7; color:rgba(255,255,255,0.75); resize:none; outline:none; cursor:text;
+  }
+  .report-ta:focus { border-color:var(--violet); }
+  .report-note { font-size:11px; color:rgba(255,255,255,0.28); margin-top:6px; text-align:center; }
+  #copy-confirm { color:var(--green); font-size:12px; text-align:center; margin-top:6px; display:none; }
+
   @media(max-width:600px){
     .card { padding:28px 20px; }
     .intro-title { font-size:30px; }
-    .sit-text { font-size:15px; }
-    .error-grid { grid-template-columns:1fr; }
+    .fill-sentence { font-size:16px; }
+    .blank-input { font-size:15px; min-width:100px; }
   }
 </style>
 </head>
@@ -218,60 +269,36 @@
   <div id="intro-screen">
     <div class="eyebrow">Oxford Navigate · Upper Intermediate</div>
     <h1 class="intro-title">The <em>Third</em><br>Conditional</h1>
-    <p class="intro-desc">Read each situation, then choose the correct third conditional sentence. Focus on the full structure — both the <em>if</em>-clause and the result clause must be right.</p>
+    <p class="intro-desc">Read each situation, then complete the third conditional sentence by typing the correct verb forms in both gaps.</p>
 
     <div class="formula-box">
       <div class="fb-title">Third Conditional — Formula</div>
       <div class="fb-formula">
-        <strong>If-clause:</strong> <code>If + had + past participle</code><br>
-        <em>If they had spent … / If she hadn't gone …</em>
+        <strong>If-clause:</strong> <code>If + had (not) + past participle</code><br>
+        <em>If I had been there … / If she hadn't gone …</em>
       </div>
       <div class="fb-formula">
         <strong>Result clause:</strong> <code>would/could/might + have + past participle</code><br>
-        <em>… he would have passed / … she could have done it</em>
+        <em>… I would have helped / … she could have done it</em>
       </div>
-      <div class="fb-formula" style="color:rgba(192,80,112,0.9)">
-        <strong>❌ Common errors:</strong> <code>spended</code> · <code>could shopping</code> · <code>would not went</code> · <code>would not late</code> · <code>did not fixed</code>
+      <div class="fb-formula" style="color:rgba(192,80,112,0.85)">
+        <strong>❌ Common errors:</strong> <code>had went</code> · <code>would helped</code> · <code>could shopping</code> · <code>had knew</code> · <code>would not late</code>
       </div>
     </div>
 
-    <div class="error-grid">
-      <div class="eg-item">
-        <div class="eg-wrong">spended all their money</div>
-        <div class="eg-right">spent all their money</div>
-        <div class="eg-label">irregular participle</div>
-      </div>
-      <div class="eg-item">
-        <div class="eg-wrong">could shopping</div>
-        <div class="eg-right">could have done shopping</div>
-        <div class="eg-label">missing have + verb</div>
-      </div>
-      <div class="eg-item">
-        <div class="eg-wrong">If Samir prepared</div>
-        <div class="eg-right">If Samir had prepared</div>
-        <div class="eg-label">past perfect in if-clause</div>
-      </div>
-      <div class="eg-item">
-        <div class="eg-wrong">would not went</div>
-        <div class="eg-right">wouldn't have gone</div>
-        <div class="eg-label">have + past participle</div>
-      </div>
-      <div class="eg-item">
-        <div class="eg-wrong">did not fixed</div>
-        <div class="eg-right">hadn't fixed</div>
-        <div class="eg-label">wrong auxiliary</div>
-      </div>
-      <div class="eg-item">
-        <div class="eg-wrong">would not late</div>
-        <div class="eg-right">wouldn't have been late</div>
-        <div class="eg-label">missing verb entirely</div>
+    <!-- Example -->
+    <div class="example-box">
+      <div class="ex-title">How the quiz works — example</div>
+      <div class="ex-situation">I wasn't there, so I couldn't help.</div>
+      <div class="ex-sentence">
+        If I <span class="ex-blank">had been</span> there, I <span class="ex-blank">would have helped</span> you.
       </div>
     </div>
 
     <div class="intro-stats">
       <div><div class="is-val">60</div><div class="is-label">Questions</div></div>
       <div><div class="is-val">10</div><div class="is-label">Per Round</div></div>
-      <div><div class="is-val">5:00</div><div class="is-label">Timer</div></div>
+      <div><div class="is-val">6:00</div><div class="is-label">Timer</div></div>
     </div>
     <button class="btn btn-primary" onclick="goToName()">Begin Quiz →</button>
   </div>
@@ -291,21 +318,27 @@
   <div id="quiz-screen" class="hidden">
     <div class="quiz-header">
       <div class="q-badge">Third Conditional</div>
-      <div class="timer-wrap"><span>⏱</span><span id="timer-display">5:00</span></div>
+      <div class="timer-wrap"><span>⏱</span><span id="timer-display">6:00</span></div>
     </div>
     <div class="prog-meta"><span>Progress</span><strong id="prog-label">1 / 10</strong></div>
     <div class="prog-track" id="prog-track"></div>
     <div class="q-num" id="q-num">Question 1</div>
+
     <div class="situation-box">
       <div class="sit-label">Situation</div>
       <div class="sit-text" id="situation"></div>
     </div>
-    <p class="q-prompt">Which sentence correctly expresses how it could have been different?</p>
-    <div class="options" id="options"></div>
+
+    <div class="fill-prompt">Complete the third conditional sentence</div>
+    <div class="fill-sentence" id="fill-sentence"></div>
+
+    <div class="check-row">
+      <button class="btn-check" id="check-btn" onclick="checkAnswer()">Check ✓</button>
+    </div>
     <div class="feedback" id="feedback"></div>
     <div class="btn-row">
       <button class="btn btn-ghost" onclick="skipQ()">Skip</button>
-      <button class="btn btn-primary" id="next-btn" onclick="nextQ()" style="display:none">Next →</button>
+      <button class="btn btn-primary hidden" id="next-btn" onclick="nextQ()">Next →</button>
     </div>
   </div>
 
@@ -321,7 +354,18 @@
       <div><div class="rs-val r" id="rs-wrong">0</div><div class="rs-label">Wrong</div></div>
       <div><div class="rs-val" id="rs-skip" style="color:rgba(255,255,255,0.3)">0</div><div class="rs-label">Skipped</div></div>
     </div>
-    <button class="btn btn-primary" onclick="startQuiz()">Try Again →</button>
+    <div class="report-card">
+      <div class="report-hdr">📋 Results Report</div>
+      <textarea id="report-text" class="report-ta" readonly></textarea>
+      <p class="report-note">👆 Copy and send to your teacher</p>
+      <div style="display:flex;justify-content:center;gap:10px;margin-top:10px">
+        <button class="btn btn-ghost" onclick="copyReport()">📋 Copy</button>
+      </div>
+      <div id="copy-confirm">✓ Copied!</div>
+    </div>
+    <div style="text-align:center;margin-top:20px">
+      <button class="btn btn-primary" onclick="startQuiz()">Try Again →</button>
+    </div>
   </div>
 
   <!-- TIMEOUT -->
@@ -345,471 +389,485 @@ const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbzvhd9K2CVC9_EPkhAEY
 
 // ═══════════════════════════════════════════════════════════════════════
 // QUESTION BANK — 60 questions
-// Each has a situation + 4 options. Wrong options mirror exact student errors:
-//  [IRR]  irregular past participle (spended, goed, costed, etc.)
-//  [HAVE] missing "have" in result clause (could shopping / would not late)
-//  [PPF]  missing past perfect in if-clause (If she went instead of had gone)
-//  [AUX]  wrong auxiliary (did not fixed / would not went)
-//  [MIX]  combination of errors
+// Format:
+//   sit  — the situation sentence shown to student
+//   pre  — text before blank 1 (always starts with "If ")
+//   mid  — text between blank 1 and blank 2
+//   post — text after blank 2 (can be empty)
+//   a1   — accepted answers for blank 1 (array, all lowercase)
+//   a2   — accepted answers for blank 2 (array, all lowercase)
+//   h1   — hint label for blank 1
+//   h2   — hint label for blank 2
+//   exp  — explanation shown in feedback
 // ═══════════════════════════════════════════════════════════════════════
 const ALL_QUESTIONS = [
 
-  // ── From student errors (exact scenarios) ────────────────────────────
+  // ── Core student errors ─────────────────────────────────────────────
   {
-    sit:"They couldn't do the shopping because they spent all their money.",
-    opts:[
-      "If they hadn't spent all their money, they could have done the shopping.",
-      "If they had not spended all their money, they could shopping.",
-      "If they didn't spend all their money, they could have done the shopping.",
-      "If they hadn't spent all their money, they could shopping."
-    ], a:0,
-    exp:"<strong>If they hadn't spent … they could have done</strong> — past perfect in the if-clause; <em>could have done</em> in the result. <em>Spended</em> is wrong (irregular: spend → spent) and <em>could shopping</em> is missing <em>have done</em>."
+    sit: "They couldn't do the shopping because they spent all their money.",
+    pre: "If they ", mid: " all their money, they ", post: " the shopping.",
+    a1: ["hadn't spent","had not spent"], a2: ["could have done","might have done"],
+    h1: "hadn't + p.p.", h2: "could have + p.p.",
+    exp: "<strong>hadn't spent … could have done</strong> — past perfect negative in the if-clause; <em>could have done</em> in the result. <em>Spended</em> is wrong — irregular verb: spend → spent."
   },
   {
-    sit:"Samir didn't prepare hard for his exam, so he couldn't pass it.",
-    opts:[
-      "If Samir prepared hard for his exam, he would have passed it.",
-      "If Samir had prepared hard for his exam, Samir could have passed it.",
-      "If Samir had prepared hard for his exam, he would passed it.",
-      "If Samir has prepared hard for his exam, he could have passed it."
-    ], a:1,
-    exp:"<strong>If Samir had prepared … he could have passed</strong> — past perfect in the if-clause is essential. <em>If Samir prepared</em> (past simple) is a very common error — it gives a second conditional, not third."
+    sit: "Samir didn't prepare hard for his exam, so he couldn't pass it.",
+    pre: "If Samir ", mid: " hard for his exam, he ", post: " it.",
+    a1: ["had prepared"], a2: ["could have passed","would have passed","might have passed"],
+    h1: "had + p.p.", h2: "could/would have + p.p.",
+    exp: "<strong>had prepared … could have passed</strong> — the if-clause needs past perfect. <em>If Samir prepared</em> (past simple) makes it second conditional — wrong for a past situation."
   },
   {
-    sit:"Chris didn't follow the instructions, so he didn't understand how to set up the computer.",
-    opts:[
-      "If Chris followed the instructions, he would have understood how to set up the computer.",
-      "If Chris had followed the instructions, he would understood how to set up the computer.",
-      "If Chris had followed the instructions, he would have understood how to set up the computer.",
-      "If Chris had followed the instructions, he would have understand how to set up the computer."
-    ], a:2,
-    exp:"<strong>If Chris had followed … he would have understood</strong> — both clauses fully correct. <em>Would understood</em> (missing <em>have</em>) and <em>would have understand</em> (base form instead of past participle) are common errors."
+    sit: "Chris didn't follow the instructions, so he didn't understand how to set up the computer.",
+    pre: "If Chris ", mid: " the instructions, he ", post: " how to set up the computer.",
+    a1: ["had followed"], a2: ["would have understood","could have understood"],
+    h1: "had + p.p.", h2: "would have + p.p.",
+    exp: "<strong>had followed … would have understood</strong> — both clauses fully correct. <em>Would understood</em> (missing <em>have</em>) is a very common error."
   },
   {
-    sit:"Bob fixed the lights, so we went on enjoying the party.",
-    opts:[
-      "If Bob did not fixed the lights, we would not went on enjoying the party.",
-      "If Bob hadn't fixed the lights, we would not went on enjoying the party.",
-      "If Bob hadn't fixed the lights, we wouldn't have gone on enjoying the party.",
-      "If Bob didn't fix the lights, we wouldn't have gone on enjoying the party."
-    ], a:2,
-    exp:"<strong>If Bob hadn't fixed … we wouldn't have gone</strong> — <em>hadn't fixed</em> (past perfect negative) in the if-clause; <em>wouldn't have gone</em> in the result. <em>Did not fixed</em> and <em>would not went</em> are both wrong."
+    sit: "Bob fixed the lights, so we went on enjoying the party.",
+    pre: "If Bob ", mid: " the lights, we ", post: " on enjoying the party.",
+    a1: ["hadn't fixed","had not fixed"], a2: ["wouldn't have gone","would not have gone"],
+    h1: "hadn't + p.p.", h2: "wouldn't have + p.p.",
+    exp: "<strong>hadn't fixed … wouldn't have gone</strong> — <em>go → gone</em> (not <em>went</em>) as past participle. <em>Did not fixed</em> and <em>would not went</em> are both wrong."
   },
   {
-    sit:"You were late for work because you had gone to bed too late the night before.",
-    opts:[
-      "If you hadn't gone to bed too late, you would not late for work.",
-      "If you didn't go to bed too late, you wouldn't have been late for work.",
-      "If you hadn't gone to bed too late, you would not been late for work.",
-      "If you hadn't gone to bed too late, you wouldn't have been late for work."
-    ], a:3,
-    exp:"<strong>If you hadn't gone … you wouldn't have been late</strong> — <em>would not late</em> is missing the verb <em>have been</em> entirely. The full result clause needs <em>would/wouldn't + have + been</em>."
+    sit: "You were late for work because you had gone to bed too late the night before.",
+    pre: "If you ", mid: " to bed too late, you ", post: " late for work.",
+    a1: ["hadn't gone","had not gone"], a2: ["wouldn't have been","would not have been"],
+    h1: "hadn't + p.p.", h2: "wouldn't have been",
+    exp: "<strong>hadn't gone … wouldn't have been late</strong> — <em>would not late</em> is missing the verb <em>have been</em> entirely. Always need <em>would + have + been</em>."
   },
 
-  // ── [IRR] Irregular past participle errors ────────────────────────────
+  // ── Irregular past participle ───────────────────────────────────────
   {
-    sit:"She didn't go to the party, so she didn't meet him.",
-    opts:[
-      "If she had went to the party, she would have met him.",
-      "If she had gone to the party, she would have met him.",
-      "If she went to the party, she would have met him.",
-      "If she had gone to the party, she would have meet him."
-    ], a:1,
-    exp:"<strong>had gone … would have met</strong> — <em>go → gone</em> (not <em>went</em>) is the past participle. <em>Had went</em> is a very common error with irregular verbs."
+    sit: "She didn't go to the party, so she didn't meet him.",
+    pre: "If she ", mid: " to the party, she ", post: " him.",
+    a1: ["had gone"], a2: ["would have met","could have met","might have met"],
+    h1: "had + gone", h2: "would have + p.p.",
+    exp: "<strong>had gone … would have met</strong> — <em>go → gone</em> (not <em>went</em>) is the past participle. <em>Had went</em> is a very common error."
   },
   {
-    sit:"He didn't take the medicine, so he didn't get better quickly.",
-    opts:[
-      "If he had took the medicine, he would have gotten better quickly.",
-      "If he took the medicine, he would have gotten better quickly.",
-      "If he had taken the medicine, he would have gotten better quickly.",
-      "If he had taken the medicine, he would gotten better quickly."
-    ], a:2,
-    exp:"<strong>had taken … would have gotten</strong> — <em>take → taken</em> (not <em>took</em>). <em>Had took</em> confuses the simple past with the past participle."
+    sit: "He didn't take the medicine, so he didn't get better quickly.",
+    pre: "If he ", mid: " the medicine, he ", post: " better quickly.",
+    a1: ["had taken"], a2: ["would have gotten","would have got","could have gotten","could have got"],
+    h1: "had + taken", h2: "would have + p.p.",
+    exp: "<strong>had taken … would have gotten</strong> — <em>take → taken</em> (not <em>took</em>). <em>Had took</em> confuses past simple with past participle."
   },
   {
-    sit:"They didn't know the answer, so they didn't win the competition.",
-    opts:[
-      "If they had knew the answer, they would have won the competition.",
-      "If they knew the answer, they would have won the competition.",
-      "If they had known the answer, they would won the competition.",
-      "If they had known the answer, they would have won the competition."
-    ], a:3,
-    exp:"<strong>had known … would have won</strong> — <em>know → known</em> (not <em>knew</em>). <em>Would won</em> is missing <em>have</em>."
+    sit: "They didn't know the answer, so they didn't win the competition.",
+    pre: "If they ", mid: " the answer, they ", post: " the competition.",
+    a1: ["had known"], a2: ["would have won","could have won"],
+    h1: "had + known", h2: "would have + won",
+    exp: "<strong>had known … would have won</strong> — <em>know → known</em> (not <em>knew</em>). <em>Would won</em> is missing <em>have</em>."
   },
   {
-    sit:"She didn't write down the address, so she couldn't find the house.",
-    opts:[
-      "If she had written down the address, she could have found the house.",
-      "If she had wrote down the address, she could have found the house.",
-      "If she wrote down the address, she could have found the house.",
-      "If she had written down the address, she could found the house."
-    ], a:0,
-    exp:"<strong>had written … could have found</strong> — <em>write → written</em> (not <em>wrote</em>). Past participle needed in both clauses."
+    sit: "She didn't write down the address, so she couldn't find the house.",
+    pre: "If she ", mid: " down the address, she ", post: " the house.",
+    a1: ["had written"], a2: ["could have found","would have found"],
+    h1: "had + written", h2: "could have + p.p.",
+    exp: "<strong>had written … could have found</strong> — <em>write → written</em> (not <em>wrote</em>). Past participle needed in both clauses."
   },
   {
-    sit:"We didn't choose the right route, so we got lost.",
-    opts:[
-      "If we had chosen the right route, we wouldn't have got lost.",
-      "If we had chose the right route, we wouldn't have got lost.",
-      "If we chose the right route, we wouldn't have got lost.",
-      "If we had chosen the right route, we wouldn't got lost."
-    ], a:0,
-    exp:"<strong>had chosen … wouldn't have got</strong> — <em>choose → chosen</em> (not <em>chose</em>). <em>Wouldn't got</em> is missing <em>have</em>."
+    sit: "We didn't choose the right route, so we got lost.",
+    pre: "If we ", mid: " the right route, we ", post: " lost.",
+    a1: ["had chosen"], a2: ["wouldn't have got","wouldn't have gotten","would not have got","would not have gotten"],
+    h1: "had + chosen", h2: "wouldn't have + p.p.",
+    exp: "<strong>had chosen … wouldn't have got</strong> — <em>choose → chosen</em> (not <em>chose</em>). <em>Wouldn't got</em> is missing <em>have</em>."
   },
   {
-    sit:"He didn't speak to his manager, so the problem wasn't solved.",
-    opts:[
-      "If he had spoken to his manager, the problem would have been solved.",
-      "If he had speaked to his manager, the problem would have been solved.",
-      "If he spoke to his manager, the problem would have been solved.",
-      "If he had spoken to his manager, the problem would been solved."
-    ], a:0,
-    exp:"<strong>had spoken … would have been solved</strong> — <em>speak → spoken</em> (not <em>speaked</em>). The passive result clause also needs <em>have been</em>."
+    sit: "He didn't speak to his manager, so the problem wasn't solved.",
+    pre: "If he ", mid: " to his manager, the problem ", post: " solved.",
+    a1: ["had spoken"], a2: ["would have been","could have been"],
+    h1: "had + spoken", h2: "would have been",
+    exp: "<strong>had spoken … would have been solved</strong> — <em>speak → spoken</em> (not <em>speaked</em>). The passive result also needs <em>have been</em>."
   },
   {
-    sit:"They didn't buy tickets in advance, so they couldn't see the show.",
-    opts:[
-      "If they had buyed tickets in advance, they could have seen the show.",
-      "If they bought tickets in advance, they could have seen the show.",
-      "If they had bought tickets in advance, they could seen the show.",
-      "If they had bought tickets in advance, they could have seen the show."
-    ], a:3,
-    exp:"<strong>had bought … could have seen</strong> — <em>buy → bought</em> is regular here but a common confusion; <em>buyed</em> is wrong. <em>Could seen</em> is missing <em>have</em>."
+    sit: "They didn't buy tickets in advance, so they couldn't see the show.",
+    pre: "If they ", mid: " tickets in advance, they ", post: " the show.",
+    a1: ["had bought"], a2: ["could have seen","would have seen"],
+    h1: "had + bought", h2: "could have + seen",
+    exp: "<strong>had bought … could have seen</strong> — <em>buy → bought</em>; <em>see → seen</em>. <em>Could seen</em> is missing <em>have</em>."
   },
 
-  // ── [HAVE] Missing 'have' in result clause ────────────────────────────
+  // ── Missing 'have' in result clause ────────────────────────────────
   {
-    sit:"She didn't study hard, so she failed the exam.",
-    opts:[
-      "If she had studied hard, she would passed the exam.",
-      "If she had studied hard, she would have passed the exam.",
-      "If she studied hard, she would have passed the exam.",
-      "If she had studied hard, she could pass the exam."
-    ], a:1,
-    exp:"<strong>would have passed</strong> — the result clause always needs <em>would/could/might + have + past participle</em>. <em>Would passed</em> (missing <em>have</em>) is a very common error."
+    sit: "She didn't study hard, so she failed the exam.",
+    pre: "If she ", mid: " hard, she ", post: " the exam.",
+    a1: ["had studied"], a2: ["would have passed","could have passed"],
+    h1: "had + p.p.", h2: "would have + p.p.",
+    exp: "<strong>would have passed</strong> — the result clause always needs <em>would/could/might + have + past participle</em>. <em>Would passed</em> (missing <em>have</em>) is a very common error."
   },
   {
-    sit:"He didn't apologise, so she didn't forgive him.",
-    opts:[
-      "If he had apologised, she would forgiven him.",
-      "If he apologised, she would have forgiven him.",
-      "If he had apologised, she might have forgiven him.",
-      "If he had apologised, she would forgive him."
-    ], a:2,
-    exp:"<strong>If he had apologised … she might have forgiven</strong> — <em>might have forgiven</em> is fully correct. <em>Would forgiven</em> and <em>would forgive</em> both miss the <em>have + past participle</em> structure."
+    sit: "He didn't apologise, so she didn't forgive him.",
+    pre: "If he ", mid: ", she ", post: " him.",
+    a1: ["had apologised","had apologized"], a2: ["might have forgiven","would have forgiven","could have forgiven"],
+    h1: "had + p.p.", h2: "might have + p.p.",
+    exp: "<strong>had apologised … might have forgiven</strong> — <em>might have forgiven</em> is fully correct. <em>Would forgiven</em> is missing <em>have</em>."
   },
   {
-    sit:"We didn't leave early, so we missed the train.",
-    opts:[
-      "If we had left early, we wouldn't missed the train.",
-      "If we left early, we wouldn't have missed the train.",
-      "If we had left early, we wouldn't have missed the train.",
-      "If we had left early, we would not miss the train."
-    ], a:2,
-    exp:"<strong>had left … wouldn't have missed</strong> — both clauses fully correct. <em>Wouldn't missed</em> is missing <em>have</em>."
+    sit: "We didn't leave early, so we missed the train.",
+    pre: "If we ", mid: " early, we ", post: " the train.",
+    a1: ["had left"], a2: ["wouldn't have missed","would not have missed"],
+    h1: "had + left", h2: "wouldn't have + p.p.",
+    exp: "<strong>had left … wouldn't have missed</strong> — both clauses fully correct. <em>Wouldn't missed</em> is missing <em>have</em>."
   },
   {
-    sit:"She didn't lock the door, so the burglar got in.",
-    opts:[
-      "If she had locked the door, the burglar wouldn't got in.",
-      "If she locked the door, the burglar wouldn't have got in.",
-      "If she had locked the door, the burglar wouldn't gotten in.",
-      "If she had locked the door, the burglar wouldn't have got in."
-    ], a:3,
-    exp:"<strong>had locked … wouldn't have got in</strong> — <em>wouldn't got</em> and <em>wouldn't gotten</em> are both missing <em>have</em>."
+    sit: "She didn't lock the door, so the burglar got in.",
+    pre: "If she ", mid: " the door, the burglar ", post: " in.",
+    a1: ["had locked"], a2: ["wouldn't have got","wouldn't have gotten","would not have got","would not have gotten"],
+    h1: "had + p.p.", h2: "wouldn't have + p.p.",
+    exp: "<strong>had locked … wouldn't have got in</strong> — <em>wouldn't got</em> is missing <em>have</em>."
   },
   {
-    sit:"He didn't read the map correctly, so they went the wrong way.",
-    opts:[
-      "If he had read the map correctly, they wouldn't have gone the wrong way.",
-      "If he had read the map correctly, they wouldn't went the wrong way.",
-      "If he read the map correctly, they wouldn't have gone the wrong way.",
-      "If he had read the map correctly, they wouldn't gone the wrong way."
-    ], a:0,
-    exp:"<strong>had read … wouldn't have gone</strong> — <em>wouldn't went</em> and <em>wouldn't gone</em> are both wrong. The past participle of <em>go</em> is <em>gone</em>, and <em>have</em> is required."
+    sit: "He didn't read the map correctly, so they went the wrong way.",
+    pre: "If he ", mid: " the map correctly, they ", post: " the wrong way.",
+    a1: ["had read"], a2: ["wouldn't have gone","would not have gone"],
+    h1: "had + read", h2: "wouldn't have + gone",
+    exp: "<strong>had read … wouldn't have gone</strong> — <em>read</em> is irregular (same past and past participle). <em>Wouldn't went</em> and <em>wouldn't gone</em> are both wrong."
   },
   {
-    sit:"The project was delayed because the team didn't communicate well.",
-    opts:[
-      "If the team had communicated well, the project wouldn't have been delayed.",
-      "If the team communicated well, the project wouldn't have been delayed.",
-      "If the team had communicated well, the project wouldn't been delayed.",
-      "If the team had communicated well, the project would not delayed."
-    ], a:0,
-    exp:"<strong>had communicated … wouldn't have been delayed</strong> — the passive result clause needs <em>have been</em>. <em>Would not delayed</em> is missing the verb entirely."
+    sit: "The project was delayed because the team didn't communicate well.",
+    pre: "If the team ", mid: " well, the project ", post: " delayed.",
+    a1: ["had communicated"], a2: ["wouldn't have been","would not have been"],
+    h1: "had + p.p.", h2: "wouldn't have been",
+    exp: "<strong>had communicated … wouldn't have been delayed</strong> — the passive result needs <em>have been</em>. <em>Would not delayed</em> is missing the verb entirely."
   },
 
-  // ── [PPF] Missing past perfect in if-clause ───────────────────────────
+  // ── Missing past perfect in if-clause ──────────────────────────────
   {
-    sit:"She wasn't careful, so she had an accident.",
-    opts:[
-      "If she was careful, she wouldn't have had an accident.",
-      "If she were careful, she wouldn't have had an accident.",
-      "If she had been careful, she wouldn't had an accident.",
-      "If she had been careful, she wouldn't have had an accident."
-    ], a:3,
-    exp:"<strong>If she had been careful … she wouldn't have had</strong> — past perfect (<em>had been</em>) in the if-clause. <em>If she was careful</em> or <em>were careful</em> gives a second conditional, not third."
+    sit: "She wasn't careful, so she had an accident.",
+    pre: "If she ", mid: " careful, she ", post: " an accident.",
+    a1: ["had been"], a2: ["wouldn't have had","would not have had"],
+    h1: "had been", h2: "wouldn't have + p.p.",
+    exp: "<strong>had been careful … wouldn't have had</strong> — past perfect in the if-clause is essential. <em>If she was careful</em> gives a second conditional, not third."
   },
   {
-    sit:"They didn't arrive on time, so they missed the opening ceremony.",
-    opts:[
-      "If they arrived on time, they wouldn't have missed the opening ceremony.",
-      "If they had arrived on time, they wouldn't have missed the opening ceremony.",
-      "If they had arrived on time, they wouldn't missed the opening ceremony.",
-      "If they arrived on time, they would not miss the opening ceremony."
-    ], a:1,
-    exp:"<strong>If they had arrived … they wouldn't have missed</strong> — past perfect in the if-clause. <em>If they arrived</em> is second conditional — wrong tense for a past situation."
+    sit: "They didn't arrive on time, so they missed the opening ceremony.",
+    pre: "If they ", mid: " on time, they ", post: " the opening ceremony.",
+    a1: ["had arrived"], a2: ["wouldn't have missed","would not have missed"],
+    h1: "had + p.p.", h2: "wouldn't have + p.p.",
+    exp: "<strong>had arrived … wouldn't have missed</strong> — past perfect in the if-clause. <em>If they arrived</em> is second conditional — wrong tense for a past situation."
   },
   {
-    sit:"He didn't charge his phone, so it ran out of battery during the meeting.",
-    opts:[
-      "If he charged his phone, it wouldn't have run out of battery.",
-      "If he had charged his phone, it wouldn't ran out of battery.",
-      "If he had charged his phone, it wouldn't have run out of battery.",
-      "If he has charged his phone, it wouldn't have run out of battery."
-    ], a:2,
-    exp:"<strong>If he had charged … it wouldn't have run out</strong> — past perfect in the if-clause; <em>wouldn't ran</em> is missing <em>have</em>. <em>Run</em> is the past participle of <em>run</em>."
+    sit: "He didn't charge his phone, so it ran out of battery during the meeting.",
+    pre: "If he ", mid: " his phone, it ", post: " of battery during the meeting.",
+    a1: ["had charged"], a2: ["wouldn't have run out","would not have run out"],
+    h1: "had + p.p.", h2: "wouldn't have run out",
+    exp: "<strong>had charged … wouldn't have run out</strong> — past perfect in the if-clause; <em>run</em> is the past participle of <em>run</em>. <em>Wouldn't ran</em> is wrong."
   },
   {
-    sit:"She didn't bring an umbrella, so she got soaked.",
-    opts:[
-      "If she brought an umbrella, she wouldn't have got soaked.",
-      "If she had brought an umbrella, she wouldn't got soaked.",
-      "If she had brought an umbrella, she wouldn't have got soaked.",
-      "If she had brought an umbrella, she would not get soaked."
-    ], a:2,
-    exp:"<strong>If she had brought … she wouldn't have got soaked</strong> — past perfect in the if-clause; <em>wouldn't got</em> is missing <em>have</em>."
+    sit: "She didn't bring an umbrella, so she got soaked.",
+    pre: "If she ", mid: " an umbrella, she ", post: " soaked.",
+    a1: ["had brought"], a2: ["wouldn't have got","wouldn't have gotten","would not have got","would not have gotten"],
+    h1: "had + brought", h2: "wouldn't have + p.p.",
+    exp: "<strong>had brought … wouldn't have got soaked</strong> — past perfect in the if-clause; <em>wouldn't got</em> is missing <em>have</em>."
   },
   {
-    sit:"He didn't save his work, so he lost everything when the computer crashed.",
-    opts:[
-      "If he saved his work, he wouldn't have lost everything.",
-      "If he had saved his work, he wouldn't lost everything.",
-      "If he had saved his work, he wouldn't have lose everything.",
-      "If he had saved his work, he wouldn't have lost everything."
-    ], a:3,
-    exp:"<strong>If he had saved … he wouldn't have lost</strong> — past perfect in the if-clause; <em>wouldn't lost</em> missing <em>have</em>; <em>wouldn't have lose</em> uses base form instead of past participle."
+    sit: "He didn't save his work, so he lost everything when the computer crashed.",
+    pre: "If he ", mid: " his work, he ", post: " everything.",
+    a1: ["had saved"], a2: ["wouldn't have lost","would not have lost"],
+    h1: "had + p.p.", h2: "wouldn't have + lost",
+    exp: "<strong>had saved … wouldn't have lost</strong> — <em>wouldn't lost</em> missing <em>have</em>; <em>wouldn't have lose</em> uses base form instead of past participle."
   },
   {
-    sit:"They didn't insure the car, so the repair cost them a fortune.",
-    opts:[
-      "If they insured the car, the repair wouldn't have cost them a fortune.",
-      "If they had insured the car, the repair wouldn't costed them a fortune.",
-      "If they had insured the car, the repair wouldn't have cost them a fortune.",
-      "If they had insured the car, the repair would not costs them a fortune."
-    ], a:2,
-    exp:"<strong>had insured … wouldn't have cost</strong> — <em>cost</em> is an irregular verb with the same form in past and past participle. <em>Wouldn't costed</em> is wrong."
+    sit: "They didn't insure the car, so the repair cost them a fortune.",
+    pre: "If they ", mid: " the car, the repair ", post: " them a fortune.",
+    a1: ["had insured"], a2: ["wouldn't have cost","would not have cost"],
+    h1: "had + p.p.", h2: "wouldn't have + cost",
+    exp: "<strong>had insured … wouldn't have cost</strong> — <em>cost</em> is irregular with the same form in past and past participle. <em>Wouldn't costed</em> is wrong."
   },
 
-  // ── [MIX] Multiple errors combined ────────────────────────────────────
+  // ── Multiple combined errors ────────────────────────────────────────
   {
-    sit:"She forgot her wallet, so she couldn't pay for lunch.",
-    opts:[
-      "If she hadn't forgotten her wallet, she could have paid for lunch.",
-      "If she hadn't forgot her wallet, she could have paid for lunch.",
-      "If she didn't forget her wallet, she could have paid for lunch.",
-      "If she hadn't forgotten her wallet, she could paid for lunch."
-    ], a:0,
-    exp:"<strong>hadn't forgotten … could have paid</strong> — <em>forget → forgotten</em> (not <em>forgot</em>). <em>Could paid</em> is missing <em>have</em>."
+    sit: "She forgot her wallet, so she couldn't pay for lunch.",
+    pre: "If she ", mid: " her wallet, she ", post: " for lunch.",
+    a1: ["hadn't forgotten","had not forgotten"], a2: ["could have paid","would have paid"],
+    h1: "hadn't + forgotten", h2: "could have + p.p.",
+    exp: "<strong>hadn't forgotten … could have paid</strong> — <em>forget → forgotten</em> (not <em>forgot</em>). <em>Could paid</em> is missing <em>have</em>."
   },
   {
-    sit:"The team lost because the captain made a poor decision in the final minutes.",
-    opts:[
-      "If the captain had not made a poor decision, the team wouldn't have lost.",
-      "If the captain had not made a poor decision, the team wouldn't lost.",
-      "If the captain didn't make a poor decision, the team wouldn't have lost.",
-      "If the captain had not maked a poor decision, the team wouldn't have lost."
-    ], a:0,
-    exp:"<strong>had not made … wouldn't have lost</strong> — <em>make → made</em> (past participle same as past simple, but <em>maked</em> is wrong). <em>Wouldn't lost</em> is missing <em>have</em>."
+    sit: "The team lost because the captain made a poor decision in the final minutes.",
+    pre: "If the captain ", mid: " a poor decision, the team ", post: " lost.",
+    a1: ["hadn't made","had not made"], a2: ["wouldn't have","would not have"],
+    h1: "hadn't + made", h2: "wouldn't have",
+    exp: "<strong>hadn't made … wouldn't have lost</strong> — <em>make → made</em> (past participle same as past simple, but <em>maked</em> is wrong). <em>Wouldn't lost</em> is missing <em>have</em>."
   },
   {
-    sit:"He didn't wear a seatbelt, so he was seriously injured.",
-    opts:[
-      "If he wore a seatbelt, he wouldn't have been seriously injured.",
-      "If he had worn a seatbelt, he wouldn't been seriously injured.",
-      "If he had worn a seatbelt, he wouldn't have been seriously injured.",
-      "If he had wore a seatbelt, he wouldn't have been seriously injured."
-    ], a:2,
-    exp:"<strong>had worn … wouldn't have been injured</strong> — <em>wear → worn</em> (not <em>wore</em>). <em>Wouldn't been</em> is missing <em>have</em>."
+    sit: "He didn't wear a seatbelt, so he was seriously injured.",
+    pre: "If he ", mid: " a seatbelt, he ", post: " seriously injured.",
+    a1: ["had worn"], a2: ["wouldn't have been","would not have been"],
+    h1: "had + worn", h2: "wouldn't have been",
+    exp: "<strong>had worn … wouldn't have been injured</strong> — <em>wear → worn</em> (not <em>wore</em>). <em>Wouldn't been</em> is missing <em>have</em>."
   },
   {
-    sit:"The weather was terrible, so the outdoor concert was cancelled.",
-    opts:[
-      "If the weather had been better, the concert wouldn't have been cancelled.",
-      "If the weather was better, the concert wouldn't have been cancelled.",
-      "If the weather had been better, the concert wouldn't been cancelled.",
-      "If the weather had been better, the concert would not cancelled."
-    ], a:0,
-    exp:"<strong>had been better … wouldn't have been cancelled</strong> — past perfect in the if-clause; passive result needs <em>have been</em>. <em>Would not cancelled</em> is missing the verb."
+    sit: "The weather was terrible, so the outdoor concert was cancelled.",
+    pre: "If the weather ", mid: " better, the concert ", post: " cancelled.",
+    a1: ["had been"], a2: ["wouldn't have been","would not have been"],
+    h1: "had been", h2: "wouldn't have been",
+    exp: "<strong>had been better … wouldn't have been cancelled</strong> — passive result needs <em>have been</em>. <em>Would not cancelled</em> is missing the verb."
   },
   {
-    sit:"She didn't practise enough, so she performed badly at the recital.",
-    opts:[
-      "If she had practised enough, she would have performed well at the recital.",
-      "If she practised enough, she would have performed well at the recital.",
-      "If she had practised enough, she would performed well at the recital.",
-      "If she had practised enough, she would have perform well at the recital."
-    ], a:0,
-    exp:"<strong>had practised … would have performed</strong> — past perfect in if-clause; <em>would performed</em> missing <em>have</em>; <em>would have perform</em> uses base form instead of past participle."
+    sit: "She didn't practise enough, so she performed badly at the recital.",
+    pre: "If she ", mid: " enough, she ", post: " well at the recital.",
+    a1: ["had practised","had practiced"], a2: ["would have performed","could have performed"],
+    h1: "had + p.p.", h2: "would have + p.p.",
+    exp: "<strong>had practised … would have performed</strong> — <em>would performed</em> missing <em>have</em>; <em>would have perform</em> uses base form instead of past participle."
   },
   {
-    sit:"Nobody told him about the change, so he came to the wrong building.",
-    opts:[
-      "If someone had told him about the change, he wouldn't have come to the wrong building.",
-      "If someone told him about the change, he wouldn't have come to the wrong building.",
-      "If someone had told him about the change, he wouldn't came to the wrong building.",
-      "If someone had told him about the change, he wouldn't have came to the wrong building."
-    ], a:0,
-    exp:"<strong>had told … wouldn't have come</strong> — <em>come → come</em> (past participle same as base form, not <em>came</em>). <em>Wouldn't came</em> and <em>wouldn't have came</em> are both wrong."
+    sit: "Nobody told him about the change, so he came to the wrong building.",
+    pre: "If someone ", mid: " him about the change, he ", post: " to the wrong building.",
+    a1: ["had told"], a2: ["wouldn't have come","would not have come"],
+    h1: "had + told", h2: "wouldn't have + come",
+    exp: "<strong>had told … wouldn't have come</strong> — <em>come → come</em> (past participle same as base form, not <em>came</em>). <em>Wouldn't came</em> and <em>wouldn't have came</em> are both wrong."
   },
   {
-    sit:"She accepted the job without reading the contract, so she was surprised by the conditions.",
-    opts:[
-      "If she had read the contract, she wouldn't have been surprised by the conditions.",
-      "If she read the contract, she wouldn't have been surprised by the conditions.",
-      "If she had read the contract, she wouldn't been surprised by the conditions.",
-      "If she had read the contract, she would not surprised by the conditions."
-    ], a:0,
-    exp:"<strong>had read … wouldn't have been surprised</strong> — past perfect in the if-clause; passive result needs <em>have been</em>. <em>Would not surprised</em> is missing the verb entirely."
+    sit: "She accepted the job without reading the contract, so she was surprised by the conditions.",
+    pre: "If she ", mid: " the contract, she ", post: " surprised by the conditions.",
+    a1: ["had read"], a2: ["wouldn't have been","would not have been"],
+    h1: "had + read", h2: "wouldn't have been",
+    exp: "<strong>had read … wouldn't have been surprised</strong> — passive result needs <em>have been</em>. <em>Would not surprised</em> is missing the verb entirely."
   },
   {
-    sit:"They didn't water the plants, so they all died.",
-    opts:[
-      "If they had watered the plants, they wouldn't have died.",
-      "If they watered the plants, they wouldn't have died.",
-      "If they had watered the plants, they wouldn't died.",
-      "If they had watered the plants, they would not die."
-    ], a:0,
-    exp:"<strong>had watered … wouldn't have died</strong> — past perfect in the if-clause; <em>wouldn't died</em> is missing <em>have</em>."
+    sit: "They didn't water the plants, so they all died.",
+    pre: "If they ", mid: " the plants, they ", post: " died.",
+    a1: ["had watered"], a2: ["wouldn't have","would not have"],
+    h1: "had + p.p.", h2: "wouldn't have",
+    exp: "<strong>had watered … wouldn't have died</strong> — past perfect in the if-clause; <em>wouldn't died</em> is missing <em>have</em>."
   },
   {
-    sit:"He didn't check the tyre pressure, so he had a blowout on the motorway.",
-    opts:[
-      "If he checked the tyre pressure, he wouldn't have had a blowout.",
-      "If he had checked the tyre pressure, he wouldn't had a blowout.",
-      "If he had checked the tyre pressure, he wouldn't have had a blowout.",
-      "If he had checked the tyre pressure, he would not have a blowout."
-    ], a:2,
-    exp:"<strong>had checked … wouldn't have had</strong> — past perfect in the if-clause; <em>wouldn't had</em> is missing <em>have</em>."
+    sit: "He didn't check the tyre pressure, so he had a blowout on the motorway.",
+    pre: "If he ", mid: " the tyre pressure, he ", post: " a blowout.",
+    a1: ["had checked"], a2: ["wouldn't have had","would not have had"],
+    h1: "had + p.p.", h2: "wouldn't have + had",
+    exp: "<strong>had checked … wouldn't have had</strong> — past perfect in the if-clause; <em>wouldn't had</em> is missing <em>have</em>."
   },
   {
-    sit:"She didn't sleep enough, so she felt exhausted all day.",
-    opts:[
-      "If she slept enough, she wouldn't have felt exhausted all day.",
-      "If she had slept enough, she wouldn't felt exhausted all day.",
-      "If she had slept enough, she would not feel exhausted all day.",
-      "If she had slept enough, she wouldn't have felt exhausted all day."
-    ], a:3,
-    exp:"<strong>had slept … wouldn't have felt</strong> — past perfect in the if-clause; <em>feel → felt</em> in the result clause. <em>Wouldn't felt</em> is missing <em>have</em>."
+    sit: "She didn't sleep enough, so she felt exhausted all day.",
+    pre: "If she ", mid: " enough, she ", post: " exhausted all day.",
+    a1: ["had slept"], a2: ["wouldn't have felt","would not have felt"],
+    h1: "had + slept", h2: "wouldn't have + felt",
+    exp: "<strong>had slept … wouldn't have felt</strong> — <em>sleep → slept</em> and <em>feel → felt</em>. <em>Wouldn't felt</em> is missing <em>have</em>."
   },
   {
-    sit:"He didn't follow the recipe properly, so the cake didn't rise.",
-    opts:[
-      "If he had followed the recipe properly, the cake would have risen.",
-      "If he followed the recipe properly, the cake would have risen.",
-      "If he had followed the recipe properly, the cake would risen.",
-      "If he had followed the recipe properly, the cake would have rose."
-    ], a:0,
-    exp:"<strong>had followed … would have risen</strong> — <em>rise → risen</em> (not <em>rose</em>). <em>Would risen</em> is missing <em>have</em>."
+    sit: "He didn't follow the recipe properly, so the cake didn't rise.",
+    pre: "If he ", mid: " the recipe properly, the cake ", post: ".",
+    a1: ["had followed"], a2: ["would have risen","could have risen"],
+    h1: "had + p.p.", h2: "would have + risen",
+    exp: "<strong>had followed … would have risen</strong> — <em>rise → risen</em> (not <em>rose</em>). <em>Would risen</em> is missing <em>have</em>."
   },
   {
-    sit:"They didn't book in advance, so they didn't get tickets.",
-    opts:[
-      "If they had booked in advance, they would have got tickets.",
-      "If they booked in advance, they would have got tickets.",
-      "If they had booked in advance, they would got tickets.",
-      "If they had book in advance, they would have got tickets."
-    ], a:0,
-    exp:"<strong>had booked … would have got</strong> — past perfect in the if-clause; <em>would got</em> is missing <em>have</em>; <em>had book</em> uses base form instead of past participle."
+    sit: "They didn't book in advance, so they didn't get tickets.",
+    pre: "If they ", mid: " in advance, they ", post: " tickets.",
+    a1: ["had booked"], a2: ["would have got","would have gotten","could have got","could have gotten"],
+    h1: "had + p.p.", h2: "would have + got",
+    exp: "<strong>had booked … would have got</strong> — past perfect in the if-clause; <em>would got</em> is missing <em>have</em>."
   },
   {
-    sit:"She didn't ask for help, so she struggled alone for hours.",
-    opts:[
-      "If she asked for help, she wouldn't have struggled alone.",
-      "If she had asked for help, she wouldn't struggled alone.",
-      "If she had asked for help, she wouldn't have struggled alone.",
-      "If she had asked for help, she would not struggle alone."
-    ], a:2,
-    exp:"<strong>had asked … wouldn't have struggled</strong> — past perfect in the if-clause; <em>wouldn't struggled</em> is missing <em>have</em>."
+    sit: "She didn't ask for help, so she struggled alone for hours.",
+    pre: "If she ", mid: " for help, she ", post: " alone for hours.",
+    a1: ["had asked"], a2: ["wouldn't have struggled","would not have struggled"],
+    h1: "had + p.p.", h2: "wouldn't have + p.p.",
+    exp: "<strong>had asked … wouldn't have struggled</strong> — past perfect in the if-clause; <em>wouldn't struggled</em> is missing <em>have</em>."
   },
   {
-    sit:"The company didn't invest in marketing, so the product launch failed.",
-    opts:[
-      "If the company had invested in marketing, the launch wouldn't have failed.",
-      "If the company invested in marketing, the launch wouldn't have failed.",
-      "If the company had invested in marketing, the launch wouldn't failed.",
-      "If the company had invested in marketing, the launch would not fail."
-    ], a:0,
-    exp:"<strong>had invested … wouldn't have failed</strong> — past perfect in the if-clause; <em>wouldn't failed</em> is missing <em>have</em>."
+    sit: "The company didn't invest in marketing, so the product launch failed.",
+    pre: "If the company ", mid: " in marketing, the launch ", post: ".",
+    a1: ["had invested"], a2: ["wouldn't have failed","would not have failed"],
+    h1: "had + p.p.", h2: "wouldn't have + p.p.",
+    exp: "<strong>had invested … wouldn't have failed</strong> — past perfect in the if-clause; <em>wouldn't failed</em> is missing <em>have</em>."
   },
   {
-    sit:"He ate too much at the party, so he felt ill afterwards.",
-    opts:[
-      "If he hadn't eaten so much, he wouldn't have felt ill.",
-      "If he hadn't ate so much, he wouldn't have felt ill.",
-      "If he didn't eat so much, he wouldn't have felt ill.",
-      "If he hadn't eaten so much, he wouldn't felt ill."
-    ], a:0,
-    exp:"<strong>hadn't eaten … wouldn't have felt</strong> — <em>eat → eaten</em> (not <em>ate</em>). <em>Wouldn't felt</em> is missing <em>have</em>."
+    sit: "He ate too much at the party, so he felt ill afterwards.",
+    pre: "If he ", mid: " so much, he ", post: " ill afterwards.",
+    a1: ["hadn't eaten","had not eaten"], a2: ["wouldn't have felt","would not have felt"],
+    h1: "hadn't + eaten", h2: "wouldn't have + felt",
+    exp: "<strong>hadn't eaten … wouldn't have felt</strong> — <em>eat → eaten</em> (not <em>ate</em>). <em>Wouldn't felt</em> is missing <em>have</em>."
   },
   {
-    sit:"She didn't update her CV, so she didn't get the interview.",
-    opts:[
-      "If she updated her CV, she would have got the interview.",
-      "If she had updated her CV, she would got the interview.",
-      "If she had updated her CV, she would have gotten the interview.",
-      "If she had updated her CV, she would have get the interview."
-    ], a:2,
-    exp:"<strong>had updated … would have gotten</strong> — past perfect in the if-clause; <em>would got</em> missing <em>have</em>; <em>would have get</em> uses base form instead of past participle."
+    sit: "She didn't update her CV, so she didn't get the interview.",
+    pre: "If she ", mid: " her CV, she ", post: " the interview.",
+    a1: ["had updated"], a2: ["would have got","would have gotten","could have got","could have gotten"],
+    h1: "had + p.p.", h2: "would have + got",
+    exp: "<strong>had updated … would have got</strong> — past perfect in the if-clause; <em>would got</em> missing <em>have</em>; <em>would have get</em> uses base form instead of past participle."
   },
   {
-    sit:"He didn't back up his files, so he lost all his work.",
-    opts:[
-      "If he had backed up his files, he wouldn't have lost all his work.",
-      "If he backed up his files, he wouldn't have lost all his work.",
-      "If he had backed up his files, he wouldn't lost all his work.",
-      "If he had back up his files, he wouldn't have lost all his work."
-    ], a:0,
-    exp:"<strong>had backed up … wouldn't have lost</strong> — past perfect in the if-clause; <em>wouldn't lost</em> missing <em>have</em>; <em>had back up</em> uses base form instead of past participle."
+    sit: "He didn't back up his files, so he lost all his work.",
+    pre: "If he ", mid: " up his files, he ", post: " all his work.",
+    a1: ["had backed"], a2: ["wouldn't have lost","would not have lost"],
+    h1: "had + backed", h2: "wouldn't have + lost",
+    exp: "<strong>had backed up … wouldn't have lost</strong> — <em>wouldn't lost</em> missing <em>have</em>."
   },
   {
-    sit:"They argued about money, so their holiday was ruined.",
-    opts:[
-      "If they hadn't argued about money, their holiday wouldn't have been ruined.",
-      "If they didn't argue about money, their holiday wouldn't have been ruined.",
-      "If they hadn't argued about money, their holiday wouldn't been ruined.",
-      "If they hadn't argued about money, their holiday would not ruined."
-    ], a:0,
-    exp:"<strong>hadn't argued … wouldn't have been ruined</strong> — passive result needs <em>have been</em>. <em>Would not ruined</em> is missing the verb entirely."
+    sit: "They argued about money, so their holiday was ruined.",
+    pre: "If they ", mid: " about money, their holiday ", post: " ruined.",
+    a1: ["hadn't argued","had not argued"], a2: ["wouldn't have been","would not have been"],
+    h1: "hadn't + p.p.", h2: "wouldn't have been",
+    exp: "<strong>hadn't argued … wouldn't have been ruined</strong> — passive result needs <em>have been</em>. <em>Would not ruined</em> is missing the verb entirely."
   },
   {
-    sit:"She left her bag on the train, so her passport was stolen.",
-    opts:[
-      "If she hadn't left her bag on the train, her passport wouldn't have been stolen.",
-      "If she didn't leave her bag on the train, her passport wouldn't have been stolen.",
-      "If she hadn't left her bag on the train, her passport wouldn't been stolen.",
-      "If she hadn't left her bag on the train, her passport would not stolen."
-    ], a:0,
-    exp:"<strong>hadn't left … wouldn't have been stolen</strong> — passive result needs <em>have been</em>. <em>Would not stolen</em> is missing the verb."
+    sit: "She left her bag on the train, so her passport was stolen.",
+    pre: "If she ", mid: " her bag on the train, her passport ", post: " stolen.",
+    a1: ["hadn't left","had not left"], a2: ["wouldn't have been","would not have been"],
+    h1: "hadn't + left", h2: "wouldn't have been",
+    exp: "<strong>hadn't left … wouldn't have been stolen</strong> — passive result needs <em>have been</em>. <em>Would not stolen</em> is missing the verb."
   },
   {
-    sit:"The driver didn't see the sign, so he took the wrong exit.",
-    opts:[
-      "If the driver had seen the sign, he wouldn't have taken the wrong exit.",
-      "If the driver saw the sign, he wouldn't have taken the wrong exit.",
-      "If the driver had seen the sign, he wouldn't taken the wrong exit.",
-      "If the driver had saw the sign, he wouldn't have taken the wrong exit."
-    ], a:0,
-    exp:"<strong>had seen … wouldn't have taken</strong> — <em>see → seen</em> and <em>take → taken</em> (both irregular). <em>Had saw</em> confuses past simple with past participle."
+    sit: "The driver didn't see the sign, so he took the wrong exit.",
+    pre: "If the driver ", mid: " the sign, he ", post: " the wrong exit.",
+    a1: ["had seen"], a2: ["wouldn't have taken","would not have taken"],
+    h1: "had + seen", h2: "wouldn't have + taken",
+    exp: "<strong>had seen … wouldn't have taken</strong> — <em>see → seen</em> and <em>take → taken</em>. <em>Had saw</em> confuses past simple with past participle."
   },
+
+  // ── Extra 20 questions ─────────────────────────────────────────────
+  {
+    sit: "I wasn't there, so I couldn't help you.",
+    pre: "If I ", mid: " there, I ", post: " you.",
+    a1: ["had been"], a2: ["could have helped","would have helped"],
+    h1: "had been", h2: "could have + p.p.",
+    exp: "<strong>had been … could have helped</strong> — <em>be → been</em> in the if-clause; <em>could have helped</em> in the result."
+  },
+  {
+    sit: "He didn't tell the truth, so nobody trusted him.",
+    pre: "If he ", mid: " the truth, people ", post: " him.",
+    a1: ["had told"], a2: ["would have trusted","could have trusted","might have trusted"],
+    h1: "had + told", h2: "would have + p.p.",
+    exp: "<strong>had told … would have trusted</strong> — <em>tell → told</em> (same in past and past participle)."
+  },
+  {
+    sit: "She didn't apply for the scholarship, so she didn't get it.",
+    pre: "If she ", mid: " for the scholarship, she ", post: " it.",
+    a1: ["had applied"], a2: ["might have got","might have gotten","could have got","could have gotten","would have got","would have gotten"],
+    h1: "had + p.p.", h2: "might have + p.p.",
+    exp: "<strong>had applied … might have got</strong> — <em>might</em> expresses possibility; both <em>got</em> and <em>gotten</em> are acceptable past participles."
+  },
+  {
+    sit: "We didn't hire more staff, so we couldn't handle the workload.",
+    pre: "If we ", mid: " more staff, we ", post: " the workload.",
+    a1: ["had hired"], a2: ["could have handled","would have handled"],
+    h1: "had + p.p.", h2: "could have + p.p.",
+    exp: "<strong>had hired … could have handled</strong> — past perfect in the if-clause; <em>could have handled</em> in the result."
+  },
+  {
+    sit: "The students didn't revise, so they were nervous in the exam.",
+    pre: "If the students ", mid: ", they ", post: " nervous in the exam.",
+    a1: ["had revised"], a2: ["wouldn't have been","would not have been"],
+    h1: "had + p.p.", h2: "wouldn't have been",
+    exp: "<strong>had revised … wouldn't have been nervous</strong> — passive-like result with <em>been</em> as the main verb."
+  },
+  {
+    sit: "He didn't listen to the doctor's advice, so his condition got worse.",
+    pre: "If he ", mid: " to the doctor's advice, his condition ", post: " worse.",
+    a1: ["had listened"], a2: ["wouldn't have got","wouldn't have gotten","would not have got","would not have gotten"],
+    h1: "had + p.p.", h2: "wouldn't have + p.p.",
+    exp: "<strong>had listened … wouldn't have got worse</strong> — <em>get → got</em>; <em>wouldn't got</em> is missing <em>have</em>."
+  },
+  {
+    sit: "She didn't set her alarm, so she overslept.",
+    pre: "If she ", mid: " her alarm, she ", post: ".",
+    a1: ["had set"], a2: ["wouldn't have overslept","would not have overslept"],
+    h1: "had + set", h2: "wouldn't have + overslept",
+    exp: "<strong>had set … wouldn't have overslept</strong> — <em>set</em> is irregular: same in base, past, and past participle."
+  },
+  {
+    sit: "They didn't plan the trip carefully, so they ran into problems.",
+    pre: "If they ", mid: " the trip carefully, they ", post: " into problems.",
+    a1: ["had planned"], a2: ["wouldn't have run","would not have run"],
+    h1: "had + p.p.", h2: "wouldn't have + run",
+    exp: "<strong>had planned … wouldn't have run into problems</strong> — <em>run → run</em> (same base and past participle)."
+  },
+  {
+    sit: "I didn't know about the event, so I didn't go.",
+    pre: "If I ", mid: " about the event, I ", post: ".",
+    a1: ["had known"], a2: ["would have gone","could have gone","might have gone"],
+    h1: "had + known", h2: "would have + gone",
+    exp: "<strong>had known … would have gone</strong> — <em>know → known</em>; <em>go → gone</em>."
+  },
+  {
+    sit: "She didn't wear sunscreen, so she got sunburnt.",
+    pre: "If she ", mid: " sunscreen, she ", post: " sunburnt.",
+    a1: ["had worn"], a2: ["wouldn't have got","wouldn't have gotten","would not have got","would not have gotten"],
+    h1: "had + worn", h2: "wouldn't have + p.p.",
+    exp: "<strong>had worn … wouldn't have got sunburnt</strong> — <em>wear → worn</em>; <em>wouldn't got</em> is missing <em>have</em>."
+  },
+  {
+    sit: "He didn't study medicine, so he couldn't become a doctor.",
+    pre: "If he ", mid: " medicine, he ", post: " a doctor.",
+    a1: ["had studied"], a2: ["could have become","would have become","might have become"],
+    h1: "had + p.p.", h2: "could have + become",
+    exp: "<strong>had studied … could have become</strong> — <em>become → become</em> (same base and past participle). <em>Became</em> is only past simple."
+  },
+  {
+    sit: "The bridge wasn't repaired, so it collapsed.",
+    pre: "If the bridge ", mid: ", it ", post: " collapsed.",
+    a1: ["had been repaired"], a2: ["wouldn't have","would not have"],
+    h1: "had been + p.p.", h2: "wouldn't have",
+    exp: "<strong>had been repaired … wouldn't have collapsed</strong> — passive if-clause needs <em>had been + past participle</em>."
+  },
+  {
+    sit: "She didn't read the small print, so she lost her deposit.",
+    pre: "If she ", mid: " the small print, she ", post: " her deposit.",
+    a1: ["had read"], a2: ["wouldn't have lost","would not have lost"],
+    h1: "had + read", h2: "wouldn't have + lost",
+    exp: "<strong>had read … wouldn't have lost</strong> — <em>read</em> is irregular (same in base, past, and past participle)."
+  },
+  {
+    sit: "He arrived late, so he missed the beginning of the presentation.",
+    pre: "If he ", mid: " on time, he ", post: " the beginning.",
+    a1: ["had arrived"], a2: ["wouldn't have missed","would not have missed"],
+    h1: "had + p.p.", h2: "wouldn't have + p.p.",
+    exp: "<strong>had arrived on time … wouldn't have missed</strong> — straightforward structure; check both clauses."
+  },
+  {
+    sit: "They didn't follow safety rules, so there was an accident.",
+    pre: "If they ", mid: " safety rules, there ", post: " an accident.",
+    a1: ["had followed"], a2: ["wouldn't have been","would not have been"],
+    h1: "had + p.p.", h2: "wouldn't have been",
+    exp: "<strong>had followed … wouldn't have been an accident</strong> — <em>be → been</em>; <em>wouldn't been</em> is missing <em>have</em>."
+  },
+  {
+    sit: "I didn't have my umbrella, so I got wet.",
+    pre: "If I ", mid: " my umbrella, I ", post: " wet.",
+    a1: ["had had"], a2: ["wouldn't have got","wouldn't have gotten","would not have got","would not have gotten"],
+    h1: "had had", h2: "wouldn't have + p.p.",
+    exp: "<strong>had had … wouldn't have got wet</strong> — <em>had had</em> is correct (past perfect of <em>have</em>). <em>Would not got</em> is missing <em>have</em>."
+  },
+  {
+    sit: "She didn't finish her assignment on time, so she got a lower grade.",
+    pre: "If she ", mid: " her assignment on time, she ", post: " a lower grade.",
+    a1: ["had finished"], a2: ["wouldn't have got","wouldn't have gotten","would not have got","would not have gotten"],
+    h1: "had + p.p.", h2: "wouldn't have + p.p.",
+    exp: "<strong>had finished … wouldn't have got a lower grade</strong> — <em>get → got/gotten</em>. <em>Wouldn't got</em> is missing <em>have</em>."
+  },
+  {
+    sit: "The player was injured, so the team didn't win the championship.",
+    pre: "If the player ", mid: " injured, the team ", post: " the championship.",
+    a1: ["hadn't been","had not been"], a2: ["might have won","could have won","would have won"],
+    h1: "hadn't been", h2: "might have + won",
+    exp: "<strong>hadn't been injured … might have won</strong> — passive if-clause with <em>hadn't been</em>."
+  },
+  {
+    sit: "He didn't think before speaking, so he offended her.",
+    pre: "If he ", mid: " before speaking, he ", post: " her.",
+    a1: ["had thought"], a2: ["wouldn't have offended","would not have offended"],
+    h1: "had + thought", h2: "wouldn't have + p.p.",
+    exp: "<strong>had thought … wouldn't have offended</strong> — <em>think → thought</em>. <em>Had thinked</em> is wrong."
+  },
+  {
+    sit: "She didn't take the earlier bus, so she was late for her interview.",
+    pre: "If she ", mid: " the earlier bus, she ", post: " late for her interview.",
+    a1: ["had taken"], a2: ["wouldn't have been","would not have been"],
+    h1: "had + taken", h2: "wouldn't have been",
+    exp: "<strong>had taken … wouldn't have been late</strong> — <em>take → taken</em>; result needs <em>have been</em> (not just <em>wouldn't late</em>)."
+  }
 ];
 
-// ═══════════════════════════════════════════════════════
-// STATE & ENGINE
-// ═══════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════
 let questions=[], current=0, score=0, wrongCount=0, skipCount=0;
-let answered=false, timer=null, timeLeft=300, segStates=[];
+let answered=false, timer=null, timeLeft=360, segStates=[];
 let studentName='', answerLog=[];
 
 function shuffle(arr){
@@ -817,10 +875,18 @@ function shuffle(arr){
   for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
   return a;
 }
+
+function normalise(str){
+  return str.trim().toLowerCase()
+    .replace(/'/g,"'").replace(/'/g,"'")
+    .replace(/\s+/g,' ');
+}
+
 function goToName(){
   show('name-screen');
   setTimeout(()=>document.getElementById('student-name').focus(),100);
 }
+
 function confirmName(){
   const v=document.getElementById('student-name').value.trim();
   const err=document.getElementById('name-error');
@@ -828,21 +894,24 @@ function confirmName(){
   err.style.display='none';
   studentName=v; startQuiz();
 }
+
 function startQuiz(){
   questions=shuffle(ALL_QUESTIONS).slice(0,10);
   answerLog=[];
   current=0;score=0;wrongCount=0;skipCount=0;
-  timeLeft=300;answered=false;
+  timeLeft=360;answered=false;
   segStates=Array(10).fill('pending');
   show('quiz-screen');
   buildProg(); loadQ(); startTimer();
 }
+
 function show(id){
   ['intro-screen','name-screen','quiz-screen','result-screen','timeout-screen'].forEach(s=>{
     document.getElementById(s).classList.add('hidden');
   });
   document.getElementById(id).classList.remove('hidden');
 }
+
 function buildProg(){
   const t=document.getElementById('prog-track');
   t.innerHTML='';
@@ -852,6 +921,7 @@ function buildProg(){
   }
   updateProg();
 }
+
 function updateProg(){
   for(let i=0;i<10;i++){
     const s=document.getElementById('seg-'+i);
@@ -861,6 +931,7 @@ function updateProg(){
     else if(i===current&&segStates[i]==='pending')s.classList.add('active');
   }
 }
+
 function loadQ(){
   answered=false;
   const q=questions[current];
@@ -868,67 +939,137 @@ function loadQ(){
   document.getElementById('prog-label').textContent=`${current+1} / 10`;
   document.getElementById('situation').textContent=q.sit;
   document.getElementById('feedback').className='feedback';
+  document.getElementById('check-btn').disabled=false;
+  document.getElementById('next-btn').classList.add('hidden');
 
-  const correctText=q.opts[q.a];
-  const shuffled=shuffle([...q.opts]);
-  q._shuffled=shuffled;
-  q._ci=shuffled.indexOf(correctText);
+  // Build the fill-in sentence
+  const container=document.getElementById('fill-sentence');
+  container.innerHTML='';
 
-  const con=document.getElementById('options');
-  con.innerHTML='';
-  ['A','B','C','D'].forEach((lbl,i)=>{
-    const d=document.createElement('div');
-    d.className='opt';
-    d.innerHTML=`<span class="opt-lbl">${lbl}</span>${shuffled[i]}`;
-    d.onclick=()=>selectA(i);
-    con.appendChild(d);
-  });
-  document.getElementById('next-btn').style.display='none';
+  // helper to append plain text words
+  function addText(txt){
+    if(!txt)return;
+    const words=txt.split(/(\s+)/);
+    words.forEach(w=>{
+      if(w.trim()){
+        const sp=document.createElement('span');
+        sp.className='fill-word';sp.textContent=w;
+        container.appendChild(sp);
+      }
+    });
+  }
+
+  // pre text
+  addText(q.pre);
+
+  // blank 1
+  const wrap1=document.createElement('span');wrap1.className='blank-wrap';
+  const inp1=document.createElement('input');
+  inp1.type='text';inp1.id='blank1';inp1.className='blank-input';
+  inp1.placeholder='____________';inp1.autocomplete='off';inp1.autocorrect='off';inp1.spellcheck=false;
+  inp1.setAttribute('size','18');
+  inp1.addEventListener('input',()=>autoSize(inp1));
+  inp1.addEventListener('keydown',e=>{if(e.key==='Enter'){document.getElementById('blank2').focus();}});
+  const hint1=document.createElement('span');hint1.className='blank-hint';hint1.textContent=q.h1;
+  wrap1.appendChild(inp1);wrap1.appendChild(hint1);
+  container.appendChild(wrap1);
+
+  // mid text
+  addText(q.mid);
+
+  // blank 2
+  const wrap2=document.createElement('span');wrap2.className='blank-wrap';
+  const inp2=document.createElement('input');
+  inp2.type='text';inp2.id='blank2';inp2.className='blank-input';
+  inp2.placeholder='____________________';inp2.autocomplete='off';inp2.autocorrect='off';inp2.spellcheck=false;
+  inp2.setAttribute('size','22');
+  inp2.addEventListener('input',()=>autoSize(inp2));
+  inp2.addEventListener('keydown',e=>{if(e.key==='Enter')checkAnswer();});
+  const hint2=document.createElement('span');hint2.className='blank-hint';hint2.textContent=q.h2;
+  wrap2.appendChild(inp2);wrap2.appendChild(hint2);
+  container.appendChild(wrap2);
+
+  // post text
+  addText(q.post);
+
   updateProg();
+  setTimeout(()=>document.getElementById('blank1').focus(),80);
 }
-function selectA(idx){
+
+function autoSize(inp){
+  const len=Math.max(inp.value.length,inp.getAttribute('size')||10);
+  inp.style.width=(len+4)+'ch';
+}
+
+function checkAnswer(){
   if(answered)return;
-  answered=true;
   const q=questions[current];
-  const opts=document.querySelectorAll('.opt');
-  opts.forEach(o=>o.classList.add('disabled'));
-  const ci=q._ci;
+  const v1=normalise(document.getElementById('blank1').value);
+  const v2=normalise(document.getElementById('blank2').value);
+
+  if(!v1||!v2){
+    const fb=document.getElementById('feedback');
+    fb.className='feedback bad show';
+    fb.innerHTML='⚠ Please fill in both blanks before checking.';
+    return;
+  }
+
+  answered=true;
+  document.getElementById('check-btn').disabled=true;
+  document.getElementById('blank1').disabled=true;
+  document.getElementById('blank2').disabled=true;
+
+  const ok1=q.a1.map(normalise).includes(v1);
+  const ok2=q.a2.map(normalise).includes(v2);
+  const correct=ok1&&ok2;
+
+  const inp1=document.getElementById('blank1');
+  const inp2=document.getElementById('blank2');
+
+  if(ok1) inp1.classList.add('correct-inp'); else inp1.classList.add('wrong-inp');
+  if(ok2) inp2.classList.add('correct-inp'); else inp2.classList.add('wrong-inp');
+
   const fb=document.getElementById('feedback');
-  if(idx===ci){
-    opts[idx].classList.add('correct-ans');
+  if(correct){
     score++;segStates[current]='correct';
     fb.className='feedback ok show';
     fb.innerHTML=`✓ Correct! ${q.exp}`;
-    answerLog.push({sit:q.sit,chosen:q._shuffled[idx],correct:q._shuffled[ci],result:'correct'});
+    answerLog.push({sit:q.sit,b1:v1,b2:v2,a1:q.a1[0],a2:q.a2[0],result:'correct'});
   } else {
-    opts[idx].classList.add('wrong-ans');
-    opts[ci].classList.add('correct-ans');
     wrongCount++;segStates[current]='wrong';
+    let msg=`✗ Not quite. `;
+    if(!ok1) msg+=`Blank 1: <span class="correct-answer-text">${q.a1[0]}</span>. `;
+    if(!ok2) msg+=`Blank 2: <span class="correct-answer-text">${q.a2[0]}</span>. `;
+    msg+=`<br><br>${q.exp}`;
     fb.className='feedback bad show';
-    fb.innerHTML=`✗ Incorrect. The correct sentence: <strong>${q._shuffled[ci]}</strong><br><br>${q.exp}`;
-    answerLog.push({sit:q.sit,chosen:q._shuffled[idx],correct:q._shuffled[ci],result:'wrong'});
+    fb.innerHTML=msg;
+    answerLog.push({sit:q.sit,b1:v1,b2:v2,a1:q.a1[0],a2:q.a2[0],result:'wrong'});
   }
   updateProg();
-  document.getElementById('next-btn').style.display='inline-block';
+  document.getElementById('next-btn').classList.remove('hidden');
 }
+
 function skipQ(){
   if(answered)return;
   answered=true;skipCount++;segStates[current]='wrong';
   const q=questions[current];
-  document.querySelectorAll('.opt').forEach(o=>o.classList.add('disabled'));
-  document.querySelectorAll('.opt')[q._ci].classList.add('correct-ans');
+  document.getElementById('check-btn').disabled=true;
+  document.getElementById('blank1').disabled=true;
+  document.getElementById('blank2').disabled=true;
   const fb=document.getElementById('feedback');
   fb.className='feedback bad show';
-  fb.innerHTML=`Skipped. Correct: <strong>${q._shuffled[q._ci]}</strong><br><br>${q.exp}`;
-  answerLog.push({sit:q.sit,chosen:'(skipped)',correct:q._shuffled[q._ci],result:'skipped'});
+  fb.innerHTML=`Skipped. Blank 1: <span class="correct-answer-text">${q.a1[0]}</span> · Blank 2: <span class="correct-answer-text">${q.a2[0]}</span><br><br>${q.exp}`;
+  answerLog.push({sit:q.sit,b1:'(skipped)',b2:'(skipped)',a1:q.a1[0],a2:q.a2[0],result:'skipped'});
   updateProg();
-  document.getElementById('next-btn').style.display='inline-block';
+  document.getElementById('next-btn').classList.remove('hidden');
 }
+
 function nextQ(){
   current++;
   if(current>=10)endQuiz();
   else loadQ();
 }
+
 function endQuiz(){
   clearInterval(timer);
   document.getElementById('result-ring').style.setProperty('--deg',(score/10)*360+'deg');
@@ -943,9 +1084,43 @@ function endQuiz(){
   else{title='Keep Practising! 💪';sub='Review: had + p.p. → would/could have + p.p.';}
   document.getElementById('result-title').textContent=title;
   document.getElementById('result-sub').textContent=sub;
+  buildReport();
   sendResults('completed');
   show('result-screen');
 }
+
+function buildReport(){
+  const lines=[
+    `THIRD CONDITIONAL QUIZ — Oxford Navigate`,
+    `Student: ${studentName}`,
+    `Date: ${new Date().toLocaleString()}`,
+    `Score: ${score}/10 (${score*10}%)`,
+    ``,
+    `QUESTION LOG:`,
+    `──────────────────────────────────────────────`,
+  ];
+  answerLog.forEach((item,i)=>{
+    const icon=item.result==='correct'?'✓':item.result==='skipped'?'—':'✗';
+    lines.push(`Q${i+1} [${icon}] ${item.sit}`);
+    if(item.result!=='correct'){
+      lines.push(`    Blank 1 typed: "${item.b1}"  →  Correct: "${item.a1}"`);
+      lines.push(`    Blank 2 typed: "${item.b2}"  →  Correct: "${item.a2}"`);
+    }
+  });
+  lines.push(`──────────────────────────────────────────────`);
+  document.getElementById('report-text').value=lines.join('\n');
+}
+
+function copyReport(){
+  const ta=document.getElementById('report-text');
+  ta.select();
+  navigator.clipboard.writeText(ta.value).then(()=>{
+    const c=document.getElementById('copy-confirm');
+    c.style.display='block';
+    setTimeout(()=>c.style.display='none',2500);
+  }).catch(()=>document.execCommand('copy'));
+}
+
 function startTimer(){
   clearInterval(timer);updateTimerDisplay();
   timer=setInterval(()=>{
@@ -953,6 +1128,7 @@ function startTimer(){
     if(timeLeft<=0){clearInterval(timer);timeOut();}
   },1000);
 }
+
 function updateTimerDisplay(){
   const m=Math.floor(timeLeft/60),s=timeLeft%60;
   const el=document.getElementById('timer-display');
@@ -961,6 +1137,7 @@ function updateTimerDisplay(){
   if(timeLeft<=30)el.classList.add('danger');
   else if(timeLeft<=60)el.classList.add('warn');
 }
+
 function timeOut(){
   document.getElementById('to-correct').textContent=score;
   document.getElementById('to-wrong').textContent=wrongCount;
@@ -968,12 +1145,15 @@ function timeOut(){
   sendResults('timeout');
   show('timeout-screen');
 }
+
 function sendResults(status){
   const formData=new FormData();
   formData.append('name',studentName);
   formData.append('score',Math.round((score/10)*100));
+  formData.append('quiz','Third Conditional Fill-in');
   formData.append('date',new Date().toLocaleString());
-  fetch(SHEETS_URL,{method:'POST',body:formData});
+  formData.append('status',status);
+  fetch(SHEETS_URL,{method:'POST',body:formData}).catch(()=>{});
 }
 </script>
 </body>
